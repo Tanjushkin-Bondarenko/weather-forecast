@@ -1,0 +1,80 @@
+body{
+   background-color: rgb(197, 207, 236);
+   margin: 0;
+}
+#topic{
+  
+   color:whitesmoke;
+   text-align: center;
+   font-weight: bold;
+   background-color:hsla(192, 21%, 51%, 0.443);
+   margin: 15px 100px auto 100px;
+   font-size: 30px;
+   padding: 2px 11px 2px 11px;
+}
+#forecast{
+    display: flex;
+    flex-direction: column;
+    text-align: start;
+    color:rgb(106, 105, 103);
+    margin: 15px 100px auto 100px;
+   font-size: 40px;
+   border: 2px solid white;
+}
+.city{
+   display: flex;
+   flex-direction: row;
+   justify-content: space-around;
+   padding-top: 20px;
+   padding-bottom: 10px;
+   border: 2px solid white;
+   margin: 40px;
+}
+.feels_like,
+.sky_description{
+   
+   font-size:20px; 
+   color: rgb(93, 160, 160);
+   font-style: oblique;
+}
+.for_seven_days{
+   display: none;
+}
+.btn_three_days,
+.btn_in_detail,
+.btn_in_celsius{
+   font-size: 15px;
+   color:black;
+   padding-bottom: 0px;
+   border: 2px solid hsla(192, 21%, 51%, 0.443);
+   border-radius: 9px;
+   background-color: hsla(192, 70%, 82%, 0.443);
+   padding: 12px;
+}
+.in_detail{
+   display: none;
+}
+.degrees_block,
+.city_name_block,
+.sky_block{
+   display: flex;
+   flex-direction: column;
+   justify-content:space-between;
+}
+.sky{
+   width: 100px;
+   height: 100px;
+}
+.block_detail{
+   display: none;
+}
+.block_detail{
+   font-size: 20px;
+   background-color: rgb(205, 205, 253);
+}
+#footer{
+   padding: 20px;
+   text-align: center;
+}
+
+
