@@ -1,19 +1,25 @@
+
 let link = [
     kievLink = "http://api.openweathermap.org/data/2.5/weather?id=703448&appid=bf35cac91880cb98375230fb443a116f&units=metric",
     londonLink = "http://api.openweathermap.org/data/2.5/weather?id=2643743&appid=bf35cac91880cb98375230fb443a116f&units=metric",
     newYorkLink = "http://api.openweathermap.org/data/2.5/weather?id=5128638&appid=bf35cac91880cb98375230fb443a116f&units=metric",
-    
-    kievTreeDays = "http://api.openweathermap.org/data/2.5/forecast?q=Kyiv&appid=ee6e6f1c8c4fb651379b1c6860d3cb27",
-    londonTreeDays = "http://api.openweathermap.org/data/2.5/forecast?q=London&appid=b644f05b948b65eda83251ab3f18331f",
-    newYorkTreeDays = "http://api.openweathermap.org/data/2.5/forecast?q=New%20York&appid=6bdb396f1f21e5657c3e9bf5df995f7f"
-
 ]
+
+let dailyLink = {
+    Kyiv: "http://api.openweathermap.org/data/2.5/forecast?q=Kyiv&appid=ee6e6f1c8c4fb651379b1c6860d3cb27",
+    London: "http://api.openweathermap.org/data/2.5/forecast?q=London&appid=b644f05b948b65eda83251ab3f18331f",
+    New_York: "http://api.openweathermap.org/data/2.5/forecast?q=New%20York&appid=6bdb396f1f21e5657c3e9bf5df995f7f"
+}
+document.querySelector("#currentDate").innerHTML = new Date().toLocaleDateString()
 
 class Forecast {
     constructor() {
         this.main = document.querySelector("main")
         this.city = document.createElement("div")
         this.blockForecust = document.createElement("div")
+        this.dailyForecast = document.createElement("button")
+        this.dailyForecastBlock = document.createElement("div")
+        this.dailyForecastBlock.classList.add("dailyForecastBlock")
         this.degreesBlock = document.createElement("div")
         this.degree = document.createElement("div")
         this.feelsLike = document.createElement("div")
@@ -37,9 +43,38 @@ class Forecast {
             .then(json => {
                 this.createCityBlock()
                 this.city.innerHTML = json.name;
+                let arr = []
+                json.name.split("").forEach(el =>
+                { if (el === " ") el = "_"; arr.push(el) })
+
+                this.dailyForecast.dataset.city = this.dailyForecastBlock.dataset.city = arr.join("")
+
+                
+                this.dailyForecast.addEventListener("click", (e) => {         
+                    if (this.dailyForecastBlock.style.display == "none" && this.dailyForecastBlock.children.length == 0) {
+                        this.dailyForecastBlock.style.display = "flex"
+                        let dailyForecasts = new DailyForecast()
+                        let nameLink = e.target.dataset.city
+                        for (let [key, value] of Object.entries(dailyLink)) {
+                            if (`${key}` == nameLink) {
+                                dailyForecasts.createDailyForecast(`${value}`)
+                            }
+                        }
+                    }else if (this.dailyForecastBlock.children && this.dailyForecastBlock.style.display == "flex") {
+                        this.dailyForecastBlock.style.display = "none"
+                        
+                    }else if (this.dailyForecastBlock.children && this.dailyForecastBlock.style.display == "none"){
+                        this.dailyForecastBlock.style.display = "flex"
+                        
+                    }
+                  
+                    
+
+                   
+                })
                 this.createDegreesBlock()
-                this.degree.innerHTML = Math.round(json.main.temp) + " C";
-                this.feelsLike.innerHTML = "fels like" + Math.round(json.main.feels_like) + " C";
+                this.degree.innerHTML = Math.round(json.main.temp) + "C";
+                this.feelsLike.innerHTML = "fels like " + Math.round(json.main.feels_like) + "C";
                 this.btnCelsius.addEventListener("click", () => this.showInCelsius(json))
               this.createSkyBlock()
                 this.sky.src = "http://openweathermap.org/img/wn/" + json.weather[0]['icon'] + "@2x.png";
@@ -60,12 +95,12 @@ class Forecast {
         this.blockForecust.classList.add("city")
         this.divNameCity = document.createElement("div")
         this.divNameCity.classList.add("city_name_block")
-        this.btnFourDays = document.createElement("button")
-        this.btnFourDays.classList.add("btn_three_days")
-        this.btnFourDays.innerHTML = "forecast for 3 days"
+        this.dailyForecast.classList.add("dailyForecast")
+        this.dailyForecast.innerHTML = "forecast for 5 days"
         this.divNameCity.append(this.city)
-        this.divNameCity.append(this.btnFourDays)
+        this.divNameCity.append(this.dailyForecast)
         this.blockForecust.append(this.divNameCity)
+       
     };
     createDegreesBlock() {
         this.degreesBlock.classList.add("degrees_block")
@@ -91,7 +126,7 @@ class Forecast {
     };
     createDetailBlock() {
         this.blockDetail.classList.add("block_detail")
-        this.blockDetail.innerHTML = "Detail forecast"
+        this.dailyForecastBlock.style.display = "none"
         this.blockDetail.style.display = "none"
         this.blockDetail.append(this.sunRise)
         this.blockDetail.append(this.sunSet)
@@ -101,21 +136,22 @@ class Forecast {
         this.blockDetail.append(this.speed);
         this.main.append(this.blockForecust)
         this.main.append(this.blockDetail)
+        this.blockForecust.after(this.dailyForecastBlock)
     };
     showInCelsius(data) {
         if (this.btnCelsius.innerHTML == "in Fahrenheit") {
-            this.degree.innerHTML = Math.round(data.main.temp + 273.15) + " F";
+            this.degree.innerHTML = Math.round(data.main.temp + 273.15) + "F";
             this.btnCelsius.innerHTML = "in Celsius"
-            this.feelsLike.innerHTML = "feels like" + Math.round(data.main.feels_like + 273.15) + " F";
+            this.feelsLike.innerHTML = "feels like " + Math.round(data.main.feels_like + 273.15) + "F";
         } else {
             this.btnCelsius.innerHTML = "in Fahrenheit";
-            this.degree.innerHTML = Math.round(data.main.temp) + " C";
-            this.feelsLike.innerHTML = "feels like" + Math.round(data.main.feels_like) + " C";
+            this.degree.innerHTML = Math.round(data.main.temp) + "C";
+            this.feelsLike.innerHTML = "feels like " + Math.round(data.main.feels_like) + " C";
         }
     };
     showDetailForecast() {
         if (this.blockDetail.style.display == "none") {
-            this.blockDetail.style.display = "block"
+            this.blockDetail.style.display = "flex"
         } else { this.blockDetail.style.display = "none" }
     }
     
@@ -128,6 +164,4 @@ let londonWeatherForecast = new Forecast();
 londonWeatherForecast.createForecast(londonLink);
 let newYorkWeatherForecast = new Forecast();
 newYorkWeatherForecast.createForecast(newYorkLink);
-
-
 
