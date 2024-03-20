@@ -1,13 +1,14 @@
 let link = [
-    kievLink = "http://api.openweathermap.org/data/2.5/weather?id=703448&appid=bf35cac91880cb98375230fb443a116f&units=metric",
-    londonLink = "http://api.openweathermap.org/data/2.5/weather?id=2643743&appid=bf35cac91880cb98375230fb443a116f&units=metric",
-    newYorkLink = "http://api.openweathermap.org/data/2.5/weather?id=5128638&appid=bf35cac91880cb98375230fb443a116f&units=metric",
+    kievLink = "https://api.openweathermap.org/data/2.5/weather?id=703448&appid=bf35cac91880cb98375230fb443a116f&units=metric",
+    londonLink = "https://api.openweathermap.org/data/2.5/weather?id=2643743&appid=bf35cac91880cb98375230fb443a116f&units=metric",
+    newYorkLink = "https://api.openweathermap.org/data/2.5/weather?id=5128638&appid=bf35cac91880cb98375230fb443a116f&units=metric",
 ]
 let dailyLink = {
-    Kyiv: "http://api.openweathermap.org/data/2.5/forecast?q=Kyiv&appid=ee6e6f1c8c4fb651379b1c6860d3cb27",
-    London: "http://api.openweathermap.org/data/2.5/forecast?q=London&appid=b644f05b948b65eda83251ab3f18331f",
-    New_York: "http://api.openweathermap.org/data/2.5/forecast?q=New%20York&appid=6bdb396f1f21e5657c3e9bf5df995f7f"
-}
+    Kyiv: "https://api.openweathermap.org/data/2.5/forecast?q=Kyiv&appid=ee6e6f1c8c4fb651379b1c6860d3cb27",
+    London: "https://api.openweathermap.org/data/2.5/forecast?q=London&appid=b644f05b948b65eda83251ab3f18331f",
+    New_York: "https://api.openweathermap.org/data/2.5/forecast?q=New%20York&appid=6bdb396f1f21e5657c3e9bf5df995f7f"
+};
+
 document.querySelector("#currentDate").innerHTML = new Date().toLocaleDateString();
 
 class Forecast {
