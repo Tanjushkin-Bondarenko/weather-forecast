@@ -1,5 +1,5 @@
 
-class DailyForecast{
+ class DailyForecast{
     constructor() {
         
         this.dailyForecastBlock = document.querySelectorAll(".dailyForecastBlock")
