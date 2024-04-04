@@ -45,23 +45,19 @@ class Forecast {
                 json.name.split("").forEach(el =>
                 { if (el === " ") el = "_"; arr.push(el) })
                 this.dailyForecast.dataset.city = this.dailyForecastBlock.dataset.city = arr.join("");             
-                this.dailyForecast.addEventListener("click", (e) => { 
+                this.dailyForecast.addEventListener("click",
+                (e) => { 
                     if(this.blockDetail.style.display == "flex"){this.blockDetail.style.display = "none"}        
                     if (this.dailyForecastBlock.style.display == "none" && this.dailyForecastBlock.children.length == 0) {
                         this.dailyForecastBlock.style.display = "flex";
-                        let dailyForecasts = new DailyForecast();
-                        let nameLink = e.target.dataset.city;
-                        for (let [key, value] of Object.entries(dailyLink)) {
-                            if (`${key}` == nameLink) {
-                                dailyForecasts.createDailyForecast(`${value}`)
-                            }
-                        }
+                        this.showDailyForecast(e)
                     }else if (this.dailyForecastBlock.children && this.dailyForecastBlock.style.display == "flex") {
                         this.dailyForecastBlock.style.display = "none";
                     }else if (this.dailyForecastBlock.children && this.dailyForecastBlock.style.display == "none"){
                         this.dailyForecastBlock.style.display = "flex";
                     }
-                })
+                }
+                )
 
                 this.createDegreesBlock();
                 this.degree.innerHTML = Math.round(json.main.temp) + "C";
@@ -143,6 +139,15 @@ class Forecast {
             this.feelsLike.innerHTML = "feels like " + Math.round(data.main.feels_like) + " C";
         }
     };
+    showDailyForecast(e){
+        let dailyForecasts = new DailyForecast();
+    let nameLink = e.target.dataset.city;
+    for (let [key, value] of Object.entries(dailyLink)) {
+        if (`${key}` == nameLink) {
+            dailyForecasts.createDailyForecast(`${value}`)
+        }
+    }
+    }
 
     showDetailForecast() {
         if (this.blockDetail.style.display == "none") {
@@ -150,7 +155,10 @@ class Forecast {
             this.blockDetail.style.display = "flex";
         } else { this.blockDetail.style.display = "none" }
     }
-}
+
+    
+    }
+
 
 let kievWeatherForecast = new Forecast();
 kievWeatherForecast.createForecast(kievLink);

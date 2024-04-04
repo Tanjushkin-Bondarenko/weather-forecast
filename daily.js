@@ -18,7 +18,6 @@
             .then(json => {
                 let list = json.list
                 list.forEach(el => {
-                   
                     let elDate = new Date(+(`${el.dt}` + "000")).toLocaleDateString()
                     let nameOfDay = this.namesOfDay[new Date(+(`${el.dt}` + "000")).getDay()]
                       if (date.toLocaleDateString() === elDate) {
@@ -38,7 +37,7 @@
                     list.forEach(element => {
                         for (let day of days) {
                             if(day.parentElement.dataset.city == this.block){
-                        if (day.dataset.date == (new Date(+(`${element.dt}` + "000")).toLocaleDateString()) && (new Date(+(`${element.dt}` + "000")).toLocaleTimeString()) == "02:00:00") {
+                        if (day.dataset.date == (new Date(+(`${element.dt}` + "000")).toLocaleDateString()) && (new Date(+(`${element.dt}` + "000")).toLocaleTimeString()) == "03:00:00") {
                         this.createCurrentDay();
                         this.dailySkyBlock = document.createElement("div");
                         this.dailySkyBlock.classList.add("dailySkyBlock");
