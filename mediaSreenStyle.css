@@ -2,9 +2,6 @@
 .day_block > div{
     width: 40%;
 }
-.block_detail{
-    justify-content: center;
-}
 .block_detail > div{
     width: 55%;
 }
@@ -22,7 +19,7 @@
     justify-content: space-evenly
 }
 }
-@media (max-width:600px){
+@media (max-width:700px){
 #forecast{
     font-size: 18px;
 }
@@ -70,6 +67,7 @@
 .block_detail > div {
     width: 100%;
     padding: 10px 20px;
+    text-align: center;
 }
 .day_block{
     padding: 6px 8px;
